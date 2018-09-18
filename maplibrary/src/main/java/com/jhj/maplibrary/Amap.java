@@ -68,7 +68,12 @@ public class Amap extends Activity {
                 onMapRemove(cameraPosition.target);
             }
         });
-
+        findViewById(R.id.iv_location).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(39.908823, 116.397470), 16f));
+            }
+        });
 
     }
 
