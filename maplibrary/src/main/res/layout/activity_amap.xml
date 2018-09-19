@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
 
     <RelativeLayout
@@ -17,51 +17,56 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/shape_search_input"
+            android:gravity="center_vertical"
+            android:padding="10dp">
 
-            <EditText
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:src="@drawable/icon_search" />
+
+            <TextView
+                android:id="@+id/tv_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="#f1f1f1"
-                android:padding="10dp"
-                android:text="搜索" />
+                android:layout_marginLeft="5dp"
+                android:hint="搜索" />
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/flag"
+            android:layout_above="@+id/view_amap_flag"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="3dp"
             android:gravity="center"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/amap_location"
+                android:id="@+id/tv_amap_location"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/infowindow_bg2d"
+                android:textColor="#000000"
                 android:visibility="gone" />
 
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/map_image_zbcx_icona" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/map_image_zbcx_icona"
+                tools:ignore="ContentDescription" />
         </LinearLayout>
 
         <View
-            android:id="@+id/flag"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:layout_centerInParent="true" />
-
-        <TextView
-            android:id="@+id/tv_location"
+            android:id="@+id/view_amap_flag"
             android:layout_width="1px"
             android:layout_height="1px"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp" />
+            android:layout_centerInParent="true" />
 
         <ImageView
             android:id="@+id/iv_location"
@@ -72,4 +77,64 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/map_location_clicked" />
     </RelativeLayout>
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout_amap_position"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#f1f1f1"
+            android:gravity="center_vertical"
+            android:paddingRight="10dp">
+
+            <ImageView
+                android:id="@+id/iv_amap_back"
+                android:layout_width="35dp"
+                android:layout_height="45dp"
+                android:background="@android:color/transparent"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:src="@drawable/topbar_icon_back" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_search_input"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/icon_search" />
+
+                <EditText
+                    android:id="@+id/et_amap_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@null"
+                    android:hint="输入搜索内容"
+                    android:imeOptions="actionSearch"
+                    android:paddingLeft="5dp"
+                    android:singleLine="true"
+                    android:textColorHint="#909090"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_amap_position"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white" />
+
+    </LinearLayout>
+</FrameLayout>

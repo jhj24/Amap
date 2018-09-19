@@ -2,6 +2,7 @@ package com.jhj.maplibrary;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -9,7 +10,17 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,8 +36,14 @@ import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.maps2d.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.geocoder.RegeocodeAddress;
+import com.amap.api.services.help.Inputtips;
+import com.amap.api.services.help.InputtipsQuery;
+import com.amap.api.services.help.Tip;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -45,6 +62,7 @@ public class Amap extends Activity {
     private String mAddress;
     private double mLat;
     private double mLon;
+    private LinearLayout layoutPosition;
 
 
     @Override
@@ -75,6 +93,53 @@ public class Amap extends Activity {
             }
         });
 
+        layoutPosition = findViewById(R.id.linearLayout_amap_position);
+        final TextView tvSearch = findViewById(R.id.tv_search);
+        final EditText etSearch = findViewById(R.id.et_amap_search);
+        final RecyclerView recyclerView = findViewById(R.id.recyclerView_amap_position);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerLineItemDecoration(this));
+        final AMapSearchPositionAdapter adapter = new AMapSearchPositionAdapter(this);
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                InputtipsQuery query = new InputtipsQuery(s.toString(), null);
+                query.setCityLimit(false);//是否限制当前城市
+                Inputtips inputtips = new Inputtips(Amap.this, query);
+                inputtips.setInputtipsListener(new Inputtips.InputtipsListener() {
+                    @Override
+                    public void onGetInputtips(List<Tip> list, int i) {
+                        adapter.setDataList((ArrayList<Tip>) list);
+                        recyclerView.setAdapter(adapter);
+
+                    }
+                });
+                inputtips.requestInputtipsAsyn();
+            }
+        });
+        tvSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layoutPosition.setVisibility(View.VISIBLE);
+                Animation animation = AnimationUtils.loadAnimation(Amap.this, R.anim.anim_in_bottom);
+                findViewById(R.id.recyclerView_amap_position).startAnimation(animation);
+                openKeyboard(etSearch);
+                etSearch.setFocusable(true);
+                etSearch.setFocusableInTouchMode(true);
+                etSearch.requestFocus();
+            }
+        });
+
     }
 
 
@@ -97,7 +162,7 @@ public class Amap extends Activity {
         aMap.getUiSettings().setZoomPosition(AMapOptions.ZOOM_POSITION_RIGHT_BUTTOM);
 
         //定位按钮是否显示，默认不显示
-        aMap.getUiSettings().setMyLocationButtonEnabled(true);
+        aMap.getUiSettings().setMyLocationButtonEnabled(false);
 
 
         aMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
@@ -146,7 +211,7 @@ public class Amap extends Activity {
         new ParsePlaceUtil(Amap.this).getAddress(new LatLonPoint(target.latitude, target.longitude), new ParsePlaceUtil.OnParseLatLonListener() {
             @Override
             public void callback(RegeocodeAddress result, int code) {
-                TextView textView = findViewById(R.id.amap_location);
+                TextView textView = findViewById(R.id.tv_amap_location);
                 if (result != null && !"".equals(result.getFormatAddress())) {
                     mLat = target.latitude;
                     mLon = target.longitude;
@@ -237,6 +302,41 @@ public class Amap extends Activity {
             } else {
                 moveToCenters();
             }
+        }
+
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            if (layoutPosition.getVisibility() == View.VISIBLE) {
+                layoutPosition.setVisibility(View.GONE);
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    public void removeMap(@NotNull Tip tip) {
+        layoutPosition.setVisibility(View.GONE);
+        closeKeyboard(layoutPosition);
+        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(tip.getPoint().getLatitude(), tip.getPoint().getLongitude()), 16f));
+    }
+
+    private void openKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.showSoftInput(view, InputMethodManager.RESULT_SHOWN);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        }
+
+    }
+
+    private void closeKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 
