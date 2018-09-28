@@ -35,10 +35,14 @@ import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.maps2d.model.MyLocationStyle;
 import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.core.PoiItem;
+import com.amap.api.services.core.SuggestionCity;
 import com.amap.api.services.geocoder.RegeocodeAddress;
 import com.amap.api.services.help.Inputtips;
 import com.amap.api.services.help.InputtipsQuery;
 import com.amap.api.services.help.Tip;
+import com.amap.api.services.poisearch.PoiResult;
+import com.amap.api.services.poisearch.PoiSearch;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -62,6 +66,7 @@ public class Amap extends Activity {
     private String mAddress;
     private double mLat;
     private double mLon;
+    public Location mLocation;
     private LinearLayout layoutPosition;
 
 
@@ -89,7 +94,7 @@ public class Amap extends Activity {
         findViewById(R.id.iv_location).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(39.908823, 116.397470), 16f));
+                aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), 16f));
             }
         });
 
@@ -166,8 +171,11 @@ public class Amap extends Activity {
 
 
         aMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
+
+
             @Override
             public void onMyLocationChange(Location location) {
+                mLocation = location;
                 BitmapDescriptor mIcon = BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.map_image_zbcx_iconc));
                 Bundle bundle = location.getExtras();
                 String province = bundle.getString("Province");
@@ -321,7 +329,38 @@ public class Amap extends Activity {
     public void removeMap(@NotNull Tip tip) {
         layoutPosition.setVisibility(View.GONE);
         closeKeyboard(layoutPosition);
-        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(tip.getPoint().getLatitude(), tip.getPoint().getLongitude()), 16f));
+        LatLonPoint latLon = tip.getPoint();
+        final String[] a = {tip.getPoiID()};
+        if (latLon != null) {
+            aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latLon.getLatitude(), latLon.getLongitude()), 16f));
+        } else {
+            PoiSearch.Query query = new PoiSearch.Query(tip.getName(), "", null);
+            //keyWord表示搜索字符串，
+            //第二个参数表示POI搜索类型，二者选填其一，选用POI搜索类型时建议填写类型代码，码表可以参考下方（而非文字）
+            //cityCode表示POI搜索区域，可以是城市编码也可以是城市名称，也可以传空字符串，空字符串代表全国在全国范围内进行搜索
+            query.setPageSize(10);// 设置每页最多返回多少条poiitem
+            query.setPageNum(0);//设置查询页码
+            PoiSearch poiSearch = new PoiSearch(this, query);
+            poiSearch.setOnPoiSearchListener(new PoiSearch.OnPoiSearchListener() {
+                @Override
+                public void onPoiSearched(PoiResult poiResult, int i) {
+                    ArrayList<PoiItem> list = poiResult.getPois();
+                    if (list.size() > 0){
+                        LatLonPoint ll = list.get(0).getLatLonPoint();
+                        aMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(ll.getLatitude(),ll.getLongitude()),16f));
+                    }
+
+                }
+
+                @Override
+                public void onPoiItemSearched(PoiItem poiItem, int i) {
+                    PoiItem c = poiItem;
+                }
+            });
+            poiSearch.searchPOIAsyn();
+
+        }
+
     }
 
     private void openKeyboard(View view) {
