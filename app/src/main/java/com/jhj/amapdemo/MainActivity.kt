@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.amap.api.location.AMapLocation
-import com.jhj.locationlibrary.LocationCallback
-import com.jhj.maplibrary.Amap
+import com.jhj.location.LocationCallback
+import com.jhj.map.Amap
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

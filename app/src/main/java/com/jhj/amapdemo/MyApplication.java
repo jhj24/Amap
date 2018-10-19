@@ -2,7 +2,7 @@ package com.jhj.amapdemo;
 
 import android.app.Application;
 
-import com.jhj.locationlibrary.Location;
+import com.jhj.location.Location;
 
 /**
  * Created by jhj on 18-8-22.

@@ -1,1 +1,1 @@
-include ':app', ':locationlibrary', ':maplibrary', ':mapsearchlibrary'
+include ':app', ':location', ':map'
