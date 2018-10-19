@@ -73,6 +73,7 @@ public class Amap extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_amap);
+
         mapView = findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
         if (aMap == null) {
