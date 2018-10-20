@@ -7,7 +7,7 @@ import kotlinx.android.synthetic.main.layout_top_bar.view.*
 /**
  * Created by jhj on 18-10-19.
  */
-class aa : AMapActivity() {
+class MapActivity : AMapActivity() {
 
    /* override val isNeedSearch: Boolean
         get() = false
