@@ -2,7 +2,7 @@
     package="com.jhj.map">
 
     <application>
-        <activity android:name="com.jhj.map.Amap" />
+        <activity android:name="com.jhj.map.AMapActivity" />
     </application>
 </manifest>
 

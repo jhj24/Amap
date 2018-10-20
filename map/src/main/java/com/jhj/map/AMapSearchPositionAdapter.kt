@@ -4,13 +4,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import com.amap.api.services.help.Tip
+import kotlinx.android.synthetic.main.layout_amap_position_search_item.view.*
 
 /**
  * Created by jhj on 18-9-19.
  */
-class AMapSearchPositionAdapter(val activity: Amap) : RecyclerView.Adapter<AMapSearchPositionAdapter.ItemViewHolder>() {
+class AMapSearchPositionAdapter(private val activity: AMapActivity) : RecyclerView.Adapter<AMapSearchPositionAdapter.ItemViewHolder>() {
 
     var dataList = arrayListOf<Tip>()
 
@@ -26,10 +26,10 @@ class AMapSearchPositionAdapter(val activity: Amap) : RecyclerView.Adapter<AMapS
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.itemView?.let {
-            it.findViewById<TextView>(R.id.tv_amap_position_item).text = dataList[position].name
-            it.findViewById<TextView>(R.id.tv_amap_district_item).text = dataList[position].district
+            it.tv_amap_position_item.text = dataList[position].name
+            it.tv_amap_district_item.text = dataList[position].district
             holder.itemView.setOnClickListener {
-                activity.removeMap(dataList[position])
+                activity.searchPositionOnMap(dataList[position])
             }
         }
     }
