@@ -9,12 +9,13 @@ import kotlinx.android.synthetic.main.layout_top_bar.view.*
  */
 class MapActivity : AMapActivity() {
 
-   /* override val isNeedSearch: Boolean
-        get() = false
+    /* override val isNeedSearch: Boolean
+         get() = false
 
-    override val isShowCenterPos: Boolean
-        get() = false
-*/
+     override val isShowCenterPos: Boolean
+         get() = false
+ */
+
     override val layoutRes: Int?
         get() = R.layout.layout_top_bar
 

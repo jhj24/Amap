@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.amap.api.services.help.Tip
-import kotlinx.android.synthetic.main.layout_amap_position_search_item.view.*
+import kotlinx.android.synthetic.main.list_item_amap_position_search.view.*
 
 /**
  * Created by jhj on 18-9-19.
@@ -15,7 +15,7 @@ class AMapSearchPositionAdapter(private val activity: AMapActivity) : RecyclerVi
     var dataList = arrayListOf<Tip>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val view = LayoutInflater.from(activity).inflate(R.layout.layout_amap_position_search_item, parent, false)
+        val view = LayoutInflater.from(activity).inflate(R.layout.list_item_amap_position_search, parent, false)
         return ItemViewHolder(view)
 
     }

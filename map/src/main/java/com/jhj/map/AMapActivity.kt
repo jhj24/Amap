@@ -55,10 +55,10 @@ open class AMapActivity : Activity() {
     open val isShowCenterPos = true
     open val scaleSize = 16f
     open val isZoomControlsEnabled = true
-    open val isMyLocationButtonEnabled = false
     open val isCompassEnabled = false
     open val isScaleControlsEnabled = false
-    open val locationIconRes = R.drawable.map_image_zbcx_iconc
+    open val locationIconRes = R.drawable.amap_image_zbcx_iconc
+    open val centerIconRes = R.drawable.amap_image_zbcx_icona
 
 
     companion object {
@@ -86,9 +86,11 @@ open class AMapActivity : Activity() {
 
         if (isShowCenterPos) {
             layout_amap_center_pos.visibility = View.VISIBLE
+            iv_amap_center.setImageResource(centerIconRes)
         } else {
             layout_amap_center_pos.visibility = View.GONE
         }
+
 
         layoutRes?.let {
             val view = LayoutInflater.from(this).inflate(it, layout_amap_top_bar, false)
@@ -175,8 +177,8 @@ open class AMapActivity : Activity() {
         aMap?.uiSettings?.isZoomControlsEnabled = isZoomControlsEnabled
         aMap?.uiSettings?.zoomPosition = AMapOptions.ZOOM_POSITION_RIGHT_BUTTOM
 
-        //定位按钮是否显示，默认不显示
-        aMap?.uiSettings?.isMyLocationButtonEnabled = isMyLocationButtonEnabled
+        //定位按钮是否显示，默认不显示(已经自定了)
+        aMap?.uiSettings?.isMyLocationButtonEnabled = false
 
         //指南针是否显示，默认不显示
         aMap?.uiSettings?.isCompassEnabled = isCompassEnabled

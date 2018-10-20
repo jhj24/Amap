@@ -43,7 +43,7 @@
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/icon_search" />
+                    android:src="@drawable/ic_amap_search" />
 
                 <TextView
                     android:id="@+id/tv_amap_search"
@@ -69,14 +69,15 @@
                     android:id="@+id/tv_amap_center_pos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/infowindow_bg2d"
+                    android:background="@drawable/amap_infowindow_bg2d"
                     android:textColor="#000000"
                     android:visibility="gone" />
 
                 <ImageView
+                    android:id="@+id/iv_amap_center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/map_image_zbcx_icona"
+                    android:src="@drawable/amap_image_zbcx_icona"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
 
@@ -93,7 +94,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="30dp"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/map_location_clicked" />
+                android:background="@drawable/bg_amap_location_clicked" />
         </RelativeLayout>
 
         <LinearLayout
@@ -117,7 +118,7 @@
                     android:background="@android:color/transparent"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"
-                    android:src="@drawable/topbar_icon_back" />
+                    android:src="@drawable/bg_amap_topbar_back" />
 
 
                 <LinearLayout
@@ -132,7 +133,7 @@
                         android:layout_width="15dp"
                         android:layout_height="15dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/icon_search" />
+                        android:src="@drawable/ic_amap_search" />
 
                     <EditText
                         android:id="@+id/et_amap_search"
