@@ -46,14 +46,14 @@
 - 设置标题（layoutRes、initAMapTopBar(view: View)）
 - 设置样式
 ```
-    open val isNeedSearch = true　//是否显示搜索框
-    open val isShowCenterPos = true　//是否显示中心点位置信息
-    open val scaleSize = 16f　//地图界面大小
-    open val isZoomControlsEnabled = true　//是否显示缩放按钮
-    open val isCompassEnabled = false　//指南针是否显示
-    open val isScaleControlsEnabled = false　//比例尺是否显示
-    open val locationIconRes = R.drawable.amap_image_zbcx_iconc　//定位点的图标
-    open val centerIconRes = R.drawable.amap_image_zbcx_icona　//中心点图标
+open val isNeedSearch = true　//是否显示搜索框
+open val isShowCenterPos = true　//是否显示中心点位置信息
+open val scaleSize = 16f　//地图界面大小
+open val isZoomControlsEnabled = true　//是否显示缩放按钮
+open val isCompassEnabled = false　//指南针是否显示
+open val isScaleControlsEnabled = false　//比例尺是否显示
+open val locationIconRes = R.drawable.amap_image_zbcx_iconc　//定位点的图标
+open val centerIconRes = R.drawable.amap_image_zbcx_icona　//中心点图标
 ```
 
 ## 混淆
