@@ -29,6 +29,8 @@ import com.amap.api.services.help.InputtipsQuery
 import com.amap.api.services.help.Tip
 import com.amap.api.services.poisearch.PoiResult
 import com.amap.api.services.poisearch.PoiSearch
+import com.jhj.map.bean.AMapPositionBean
+import com.jhj.map.utils.ParsePlaceUtil
 import kotlinx.android.synthetic.main.activity_amap.*
 import java.util.*
 

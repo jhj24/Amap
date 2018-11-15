@@ -1,4 +1,4 @@
-package com.jhj.map;
+package com.jhj.map.bean;
 
 import java.io.Serializable;
 

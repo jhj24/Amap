@@ -25,7 +25,7 @@ class AMapSearchPositionAdapter(private val activity: AMapActivity) : RecyclerVi
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.itemView?.let {
+        holder.itemView.let {
             it.tv_amap_position_item.text = dataList[position].name
             it.tv_amap_district_item.text = dataList[position].district
             holder.itemView.setOnClickListener {

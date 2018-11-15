@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.amap.api.maps2d.model.LatLng
 import com.jhj.map.AMapActivity
-import com.jhj.map.AMapPositionBean
+import com.jhj.map.bean.AMapPositionBean
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
